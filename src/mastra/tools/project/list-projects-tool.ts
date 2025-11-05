@@ -87,9 +87,6 @@ export const listProjectsTool = createTool({
         params.grouped = String(context.grouped);
       }
 
-      console.log('params',params);
-      
-
       const result = await apiGet("/api/projects", params, getTududiCookie(runtimeContext));
 
       if (!result.success) {

@@ -24,7 +24,7 @@ export const projectsManagerAgent = new Agent({
       - 使用 listProjectsTool 获取项目列表（支持按状态、区域、固定状态等过滤）
       - 使用 getProjectTool 根据UID或slug查找特定项目
       - 使用 createProjectTool 创建新项目（需要提供name，其他字段可选）
-      - 使用 updateProjectTool 更新项目信息（支持部分更新）
+      - 使用 updateProjectTool 更新项目信息（支持部分更新，包括标签）
       - 使用 deleteProjectTool 删除项目（需谨慎操作，删除前需要先处理关联的任务和笔记）
 
       操作标准：
@@ -33,7 +33,7 @@ export const projectsManagerAgent = new Agent({
       - 项目UID通常以"proj_"开头
       - 更新项目时至少提供一个要更新的字段
       - 删除操作前确认用户意图，因为删除前需要先处理关联的任务和笔记
-      - 标签格式：[{ name: "标签名" }]，提供新标签数组将完全替换现有标签
+      - 标签管理：更新项目标签时，可以直接传递标签名称数组，格式为 [{ name: "标签名" }]。系统会自动处理标签的创建和关联，无需先到标签模块创建标签。提供新标签数组将完全替换现有标签
 
       项目特性：
       - 项目可以关联到特定区域（Area）

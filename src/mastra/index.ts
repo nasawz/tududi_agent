@@ -6,12 +6,12 @@ import { notesManagerAgent } from "./agents/notes-manager-agent";
 import { tagsManagerAgent } from "./agents/tags-manager-agent";
 import { areasManagerAgent } from "./agents/areas-manager-agent";
 import { projectsManagerAgent } from "./agents/projects-manager-agent";
-import { systemStatusAgent } from "./agents/system-status-agent";
+import { superAgent } from "./agents/super-agent";
 
 const storage = new PostgresStore(getDatabaseConfig());
 
 export const mastra = new Mastra({
-  agents: { notesManagerAgent, tagsManagerAgent, areasManagerAgent, projectsManagerAgent, systemStatusAgent },
+  agents: { notesManagerAgent, tagsManagerAgent, areasManagerAgent, projectsManagerAgent, superAgent },
   workflows: {
 
   },
