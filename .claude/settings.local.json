@@ -1,26 +1,12 @@
 {
   "permissions": {
     "allow": [
-      "Bash(tree -L 3 /Users/wangzhe/work/server/tududi_agent)",
-      "Bash(cat /Users/wangzhe/work/server/tududi_agent/mark.txt)",
-      "Bash(node test/test-get-profile.js)",
-      "Bash(curl -I https://competent_shaw.orb.local/api/profile)",
-      "Bash(curl -v https://competent_shaw.orb.local/api/profile)",
-      "Bash(curl -v https://competent_shaw.orb.local/api/profile -H \"Cookie: connect.sid=s%3AAJjxUb1uYvkSoT21Alu5EhBGjLzrWBIu.fB5I8%2FQeUb25Dw9lXFf7I54aRA1Ck6H37FegOIPcPj8; i18next=en\")",
-      "Bash(curl -s -w \"\\nHTTP_CODE:%{http_code}\\n\" \"https://competent_shaw.orb.local/api/profile\" )",
-      "Bash(node test/test-profile-simple.js)",
-      "Bash(node test/test-notes-list.js)",
-      "Bash(node test/test-notes-query.js)",
-      "Bash(node test/test-notes-crud.js)",
-      "Bash(node test/test-notes-readonly.js)",
-      "Bash(node test/test-notes-detail.js)",
-      "Bash(node test/test-notes-create-slow.js)",
-      "Bash(node test/test-notes-verify-created.js)",
-      "Bash(node test/test-notes-delete-slow.js)",
-      "Bash(node test/test-notes-lock-handling.js)",
-      "Bash(node test/test-notes-cleanup.js)",
-      "Bash(find /Users/wangzhe/work/server/tududi_agent -name \"*.ts\" -type f -exec grep -l \"axios\\|fetch\\|http\" {})",
-      "Bash(tree -I node_modules /Users/wangzhe/work/server/tududi_agent/src/mastra/)"
+      "Bash(tree*)",
+      "Bash(cat*)",
+      "Bash(node test/*)",
+      "Bash(curl https://competent_shaw.orb.local/*)",
+      "Bash(find /Users/wangzhe/work/server/tududi_agent/*)",
+      "Bash(xargs*)"
     ]
   },
   "disabledMcpjsonServers": [
