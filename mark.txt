@@ -1,0 +1,7 @@
+cookie
+connect.sid=s%3AAJjxUb1uYvkSoT21Alu5EhBGjLzrWBIu.fB5I8%2FQeUb25Dw9lXFf7I54aRA1Ck6H37FegOIPcPj8; i18next=en
+
+
+https://competent_shaw.orb.local/today
+
+https://competent_shaw.orb.local/api/profile
