@@ -47,8 +47,6 @@ export const listNotesTool = createTool({
       if (context.limit) params.limit = context.limit.toString();
       if (context.offset) params.offset = context.offset.toString();
 
-console.log('cookie',getTududiCookie(runtimeContext));
-
       const result = await apiGet("/api/notes", params, getTududiCookie(runtimeContext));
 
       if (!result.success) {

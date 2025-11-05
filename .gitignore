@@ -94,6 +94,7 @@ ehthumbs.db
 Thumbs.db
 
 # Mastra specific
+.mastra/
 .mastra/cache/
 .mastra/runtime/
 .mastra/.build/
