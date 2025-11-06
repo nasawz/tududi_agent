@@ -227,8 +227,37 @@ export async function deleteDocuments(
 
     // 如果提供了ID数组，添加ID条件
     if (ids && ids.length > 0) {
-      conditions.push(`id = ANY($${paramIndex}::text[])`);
-      values.push(ids);
+      // 首先查询表结构以确定ID列的数据类型
+      const columnTypeResult = await client.query(
+        `SELECT data_type FROM information_schema.columns 
+         WHERE table_schema = 'public' 
+         AND table_name = $1 
+         AND column_name = 'id'`,
+        [indexName]
+      );
+      
+      const idColumnType = columnTypeResult.rows[0]?.data_type;
+      
+      if (idColumnType === 'integer' || idColumnType === 'bigint') {
+        // ID列是整数类型，尝试转换字符串ID为整数
+        try {
+          const integerIds = ids.map(id => {
+            const parsed = parseInt(id, 10);
+            if (isNaN(parsed)) {
+              throw new Error(`无法将ID "${id}" 转换为整数`);
+            }
+            return parsed;
+          });
+          conditions.push(`id = ANY($${paramIndex}::integer[])`);
+          values.push(integerIds);
+        } catch (conversionError) {
+          throw new Error(`ID类型转换失败: ${conversionError instanceof Error ? conversionError.message : String(conversionError)}`);
+        }
+      } else {
+        // ID列是文本类型，直接使用字符串
+        conditions.push(`id = ANY($${paramIndex}::text[])`);
+        values.push(ids);
+      }
       paramIndex++;
     }
 
