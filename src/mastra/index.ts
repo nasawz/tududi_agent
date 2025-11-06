@@ -9,9 +9,22 @@ import { tasksManagerAgent } from "./agents/tasks-manager-agent";
 import { inboxManagerAgent } from "./agents/inbox-manager-agent";
 import { searchManagerAgent } from "./agents/search-manager-agent";
 import { superAgent } from "./agents/super-agent";
+import { vectorWriterAgent } from "./agents/vector-writer-agent";
+import { vectorSearcherAgent } from "./agents/vector-searcher-agent";
 
 export const mastra = new Mastra({
-  agents: { notesManagerAgent, tagsManagerAgent, areasManagerAgent, projectsManagerAgent, tasksManagerAgent, inboxManagerAgent, searchManagerAgent, superAgent },
+  agents: {
+    vectorWriterAgent,
+    vectorSearcherAgent,
+    notesManagerAgent,
+    tagsManagerAgent,
+    areasManagerAgent,
+    projectsManagerAgent,
+    tasksManagerAgent,
+    inboxManagerAgent,
+    searchManagerAgent,
+    superAgent
+  },
   workflows: {
 
   },
