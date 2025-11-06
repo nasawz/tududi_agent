@@ -1,7 +1,6 @@
 import { Agent } from "@mastra/core/agent";
 import { Memory } from '@mastra/memory';
-import { PostgresStore } from '@mastra/pg';
-import { getDatabaseConfig } from "../config";
+import { storage } from "../storage";
 import { listTagsTool } from "../tools/tag/list-tags-tool";
 import { getTagTool } from "../tools/tag/get-tag-tool";
 import { createTagTool } from "../tools/tag/create-tag-tool";
@@ -57,8 +56,8 @@ export const tagsManagerAgent = new Agent({
       updateTagTool, 
       deleteTagTool 
     },
-    // memory: new Memory({
-    //   storage: new PostgresStore(getDatabaseConfig()),
-    // }),
+    memory: new Memory({
+      storage: storage,
+    }),
 });
 

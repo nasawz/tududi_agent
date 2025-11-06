@@ -1,7 +1,6 @@
 import { Agent } from "@mastra/core/agent";
 import { Memory } from '@mastra/memory';
-import { PostgresStore } from '@mastra/pg';
-import { getDatabaseConfig } from "../config";
+import { storage } from "../storage";
 import { listProjectsTool } from "../tools/project/list-projects-tool";
 import { getProjectTool } from "../tools/project/get-project-tool";
 import { createProjectTool } from "../tools/project/create-project-tool";
@@ -72,8 +71,8 @@ export const projectsManagerAgent = new Agent({
       updateProjectTool, 
       deleteProjectTool 
     },
-    // memory: new Memory({
-    //   storage: new PostgresStore(getDatabaseConfig()),
-    // }),
+    memory: new Memory({
+      storage: storage,
+    }),
 });
 

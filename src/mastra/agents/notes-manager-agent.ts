@@ -1,7 +1,6 @@
 import { Agent } from "@mastra/core/agent";
 import { Memory } from '@mastra/memory';
-import { PostgresStore } from '@mastra/pg';
-import { getDatabaseConfig } from "../config";
+import { storage } from "../storage";
 import { createNoteTool } from "../tools/note/create-note-tool";
 import { searchNotesTool } from "../tools/note/search-notes-tool";
 import { listNotesTool } from "../tools/note/list-notes-tool";
@@ -54,7 +53,7 @@ export const notesManagerAgent = new Agent({
       updateNoteTool, 
       deleteNoteTool 
     },
-    // memory: new Memory({
-    //   storage: new PostgresStore(getDatabaseConfig()),
-    // }),
+    memory: new Memory({
+      storage: storage,
+    }),
 });

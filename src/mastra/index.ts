@@ -1,17 +1,17 @@
 import { Mastra } from "@mastra/core/mastra";
-import { PostgresStore } from "@mastra/pg";
 import { PinoLogger } from '@mastra/loggers';
-import { getDatabaseConfig } from "./config";
+import { storage } from "./storage";
 import { notesManagerAgent } from "./agents/notes-manager-agent";
 import { tagsManagerAgent } from "./agents/tags-manager-agent";
 import { areasManagerAgent } from "./agents/areas-manager-agent";
 import { projectsManagerAgent } from "./agents/projects-manager-agent";
+import { tasksManagerAgent } from "./agents/tasks-manager-agent";
+import { inboxManagerAgent } from "./agents/inbox-manager-agent";
+import { searchManagerAgent } from "./agents/search-manager-agent";
 import { superAgent } from "./agents/super-agent";
 
-const storage = new PostgresStore(getDatabaseConfig());
-
 export const mastra = new Mastra({
-  agents: { notesManagerAgent, tagsManagerAgent, areasManagerAgent, projectsManagerAgent, superAgent },
+  agents: { notesManagerAgent, tagsManagerAgent, areasManagerAgent, projectsManagerAgent, tasksManagerAgent, inboxManagerAgent, searchManagerAgent, superAgent },
   workflows: {
 
   },

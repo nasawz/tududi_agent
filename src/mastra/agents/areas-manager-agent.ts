@@ -1,7 +1,6 @@
 import { Agent } from "@mastra/core/agent";
 import { Memory } from '@mastra/memory';
-import { PostgresStore } from '@mastra/pg';
-import { getDatabaseConfig } from "../config";
+import { storage } from "../storage";
 import { listAreasTool } from "../tools/area/list-areas-tool";
 import { getAreaTool } from "../tools/area/get-area-tool";
 import { createAreaTool } from "../tools/area/create-area-tool";
@@ -61,8 +60,8 @@ export const areasManagerAgent = new Agent({
       updateAreaTool, 
       deleteAreaTool 
     },
-    // memory: new Memory({
-    //   storage: new PostgresStore(getDatabaseConfig()),
-    // }),
+    memory: new Memory({
+      storage: storage,
+    }),
 });
 
