@@ -8,7 +8,7 @@ export const createTaskTool = createTool({
   description: "创建新任务，支持设置优先级、到期日期、项目关联、子任务和重复任务",
   inputSchema: z.object({
     name: z.string().describe("任务名称，必填"),
-    description: z.string().optional().describe("任务描述"),
+    note: z.string().optional().describe("任务备注"),
     priority: z.number().optional().describe("优先级（数值越小优先级越高，默认0）"),
     due_date: z.string().optional().describe("到期日期（ISO 8601格式，如：2024-01-20T10:00:00.000Z）"),
     project_id: z.number().optional().describe("所属项目ID"),
@@ -26,7 +26,7 @@ export const createTaskTool = createTool({
       id: z.number(),
       uid: z.string(),
       name: z.string(),
-      description: z.string().optional().nullable(),
+      note: z.string().optional().nullable(),
       priority: z.number().optional(),
       due_date: z.string().optional().nullable(),
       state: z.string(),
@@ -52,7 +52,7 @@ export const createTaskTool = createTool({
         name: context.name,
       };
 
-      if (context.description !== undefined) data.description = context.description;
+      if (context.note !== undefined) data.note = context.note;
       if (context.priority !== undefined) data.priority = context.priority;
       if (context.due_date !== undefined) data.due_date = context.due_date;
       if (context.project_id !== undefined) data.project_id = context.project_id;

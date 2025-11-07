@@ -25,7 +25,7 @@ export const vectorSearcherAgent = new Agent({
       **数据搜索 (searchVectorDataTool)**：
       - indexName: 选择合适的搜索索引，常见索引包括：
         * "notes_embeddings" - 搜索笔记内容，找到语义相似的笔记
-        * "tasks_embeddings" - 搜索任务描述，发现相似或重复的任务
+        * "tasks_embeddings" - 搜索任务备注，发现相似或重复的任务
         * "projects_embeddings" - 搜索项目描述，找到相关项目或推荐类似项目
         * "knowledge_base" - 搜索知识库，查找工作流程、模板、最佳实践
         * "inbox_embeddings" - 搜索收件箱内容，识别重复或相似条目

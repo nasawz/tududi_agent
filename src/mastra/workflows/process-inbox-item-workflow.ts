@@ -197,7 +197,7 @@ export const processInboxItemWorkflow = createWorkflow({
           };
 
           if (inboxItem.content) {
-            taskData.description = inboxItem.content;
+            taskData.note = inboxItem.content;
           }
 
           if (extractedInfo.priority !== undefined && extractedInfo.priority !== null && typeof extractedInfo.priority === 'number') {

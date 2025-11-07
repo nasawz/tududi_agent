@@ -21,7 +21,7 @@
 | id | number | 任务ID |
 | uid | string | 任务唯一标识符 |
 | name | string | 任务名称 |
-| description | string | 任务描述 |
+| note | string | 任务备注 |
 | priority | number | 优先级（数值越小优先级越高） |
 | due_date | date | 到期日期 |
 | state | string | 任务状态 |
@@ -59,7 +59,7 @@ GET /api/tasks
       "id": 1,
       "uid": "task_abc123",
       "name": "完成项目报告",
-      "description": "编写Q4项目总结报告",
+      "note": "编写Q4项目总结报告",
       "priority": 1,
       "due_date": "2024-01-15T10:00:00.000Z",
       "state": "active",
@@ -118,7 +118,7 @@ GET /api/task?uid=task_abc123
   "id": 1,
   "uid": "task_abc123",
   "name": "完成项目报告",
-  "description": "编写Q4项目总结报告",
+  "note": "编写Q4项目总结报告",
   "priority": 1,
   "due_date": "2024-01-15T10:00:00.000Z",
   "state": "active",
@@ -154,7 +154,7 @@ GET /api/task/123
   "id": 123,
   "uid": "task_abc123",
   "name": "完成项目报告",
-  "description": "编写Q4项目总结报告",
+  "note": "编写Q4项目总结报告",
   "priority": 1,
   "due_date": "2024-01-15T10:00:00.000Z",
   "state": "active",
@@ -247,7 +247,7 @@ POST /api/task
 ```json
 {
   "name": "新任务",
-  "description": "任务描述",
+  "note": "任务备注",
   "priority": 1,
   "due_date": "2024-01-20T10:00:00.000Z",
   "project_id": 5,
@@ -264,7 +264,7 @@ POST /api/task
 | 参数 | 类型 | 必填 | 说明 |
 |------|------|------|------|
 | name | string | 是 | 任务名称 |
-| description | string | 否 | 任务描述 |
+| note | string | 否 | 任务备注 |
 | priority | number | 否 | 优先级（默认0） |
 | due_date | date | 否 | 到期日期 |
 | project_id | number | 否 | 项目ID |
@@ -290,7 +290,7 @@ POST /api/task
   "id": 126,
   "uid": "task_new123",
   "name": "新任务",
-  "description": "任务描述",
+  "note": "任务备注",
   "priority": 1,
   "due_date": "2024-01-20T10:00:00.000Z",
   "state": "active",
@@ -325,7 +325,7 @@ PATCH /api/task/123
 ```json
 {
   "name": "更新后的任务名称",
-  "description": "更新后的描述",
+  "note": "更新后的备注",
   "priority": 2,
   "due_date": "2024-01-25T10:00:00.000Z",
   "project_id": 6,
@@ -343,7 +343,7 @@ PATCH /api/task/123
   "id": 123,
   "uid": "task_abc123",
   "name": "更新后的任务名称",
-  "description": "更新后的描述",
+  "note": "更新后的备注",
   "priority": 2,
   "due_date": "2024-01-25T10:00:00.000Z",
   "state": "active",

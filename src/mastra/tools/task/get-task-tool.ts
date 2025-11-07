@@ -17,7 +17,7 @@ export const getTaskTool = createTool({
       id: z.number(),
       uid: z.string(),
       name: z.string(),
-      description: z.string().optional().nullable(),
+      note: z.string().optional().nullable(),
       priority: z.number().optional(),
       due_date: z.string().optional().nullable(),
       state: z.string(),

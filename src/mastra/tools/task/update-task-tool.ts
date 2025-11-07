@@ -9,7 +9,7 @@ export const updateTaskTool = createTool({
   inputSchema: z.object({
     id: z.number().describe("任务ID，必填"),
     name: z.string().optional().describe("任务名称"),
-    description: z.string().optional().describe("任务描述"),
+    note: z.string().optional().describe("任务备注"),
     priority: z.number().optional().describe("优先级（数值越小优先级越高）"),
     due_date: z.string().optional().describe("到期日期（ISO 8601格式）"),
     project_id: z.number().optional().describe("所属项目ID"),
@@ -22,7 +22,7 @@ export const updateTaskTool = createTool({
       id: z.number(),
       uid: z.string(),
       name: z.string(),
-      description: z.string().optional().nullable(),
+      note: z.string().optional().nullable(),
       priority: z.number().optional(),
       due_date: z.string().optional().nullable(),
       state: z.string(),
@@ -44,7 +44,7 @@ export const updateTaskTool = createTool({
       // 检查是否有更新内容
       const hasUpdate =
         context.name !== undefined ||
-        context.description !== undefined ||
+        context.note !== undefined ||
         context.priority !== undefined ||
         context.due_date !== undefined ||
         context.project_id !== undefined ||
@@ -61,7 +61,7 @@ export const updateTaskTool = createTool({
       // 构建请求数据
       const data: any = {};
       if (context.name !== undefined) data.name = context.name;
-      if (context.description !== undefined) data.description = context.description;
+      if (context.note !== undefined) data.note = context.note;
       if (context.priority !== undefined) data.priority = context.priority;
       if (context.due_date !== undefined) data.due_date = context.due_date;
       if (context.project_id !== undefined) data.project_id = context.project_id;

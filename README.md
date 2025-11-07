@@ -455,7 +455,7 @@ src/mastra/
 3. **条件分支处理** (`branch`)
    - **分支 1**: 如果提取到 `task_name` → 创建任务 (`create-task`)
      - 使用提取的信息创建任务
-     - 设置任务描述、优先级、截止日期等
+     - 设置任务备注、优先级、截止日期等
      - 调用 `createTaskTool` 执行创建
    - **分支 2**: 否则 → 创建笔记 (`create-note`)
      - 使用文本内容创建笔记
@@ -609,15 +609,17 @@ const newProject = await apiPost('/api/project', {
 {
   id: number;                    // 数据库 ID
   uid: string;                   // 唯一标识符 (以 "task_" 开头)
-  title: string;                 // 任务标题
-  description?: string;          // 任务描述
-  completed: boolean;            // 完成状态
-  today: boolean;                // 是否为今日任务
+  name: string;                  // 任务名称
+  note?: string;                 // 任务备注
+  state: 'active' | 'completed' | 'archived'; // 任务状态
+  priority?: number;              // 优先级（数值越小优先级越高）
+  due_date?: string;             // 到期日期 (ISO 格式)
   project_id?: number;           // 关联项目 ID
   parent_task_id?: number;       // 父任务 ID (子任务)
-  due_date?: string;             // 到期日期
-  priority?: 'low' | 'medium' | 'high'; // 优先级
-  recurring_pattern?: object;    // 重复模式配置
+  recurrence_type?: 'daily' | 'weekly' | 'monthly'; // 重复类型
+  recurrence_interval?: number;  // 重复间隔
+  recurrence_days?: string[];    // 重复的星期几（仅用于 weekly）
+  recurrence_end_date?: string;  // 重复结束日期
   created_at?: string;           // 创建时间
   updated_at?: string;           // 更新时间
   tags: Array<{ id: number; uid: string; name: string; }>; // 关联标签
