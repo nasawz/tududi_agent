@@ -18,7 +18,7 @@ export const getTaskSubtasksTool = createTool({
         uid: z.string(),
         name: z.string(),
         state: z.string(),
-        priority: z.number().optional(),
+        priority: z.string().optional().nullable(),
         due_date: z.string().optional().nullable(),
         parent_task_id: z.number(),
       })

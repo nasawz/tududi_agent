@@ -612,7 +612,7 @@ const newProject = await apiPost('/api/project', {
   name: string;                  // 任务名称
   note?: string;                 // 任务备注
   state: 'active' | 'completed' | 'archived'; // 任务状态
-  priority?: number;              // 优先级（数值越小优先级越高）
+  priority?: 'high' | 'medium' | 'low'; // 优先级
   due_date?: string;             // 到期日期 (ISO 格式)
   project_id?: number;           // 关联项目 ID
   parent_task_id?: number;       // 父任务 ID (子任务)

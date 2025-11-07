@@ -22,7 +22,7 @@
 | uid | string | 任务唯一标识符 |
 | name | string | 任务名称 |
 | note | string | 任务备注 |
-| priority | number | 优先级（数值越小优先级越高） |
+| priority | string | 优先级（high/medium/low） |
 | due_date | date | 到期日期 |
 | state | string | 任务状态 |
 | parent_task_id | number | 父任务ID（用于子任务） |
@@ -60,7 +60,7 @@ GET /api/tasks
       "uid": "task_abc123",
       "name": "完成项目报告",
       "note": "编写Q4项目总结报告",
-      "priority": 1,
+      "priority": "high",
       "due_date": "2024-01-15T10:00:00.000Z",
       "state": "active",
       "project_id": 5,
@@ -75,7 +75,7 @@ GET /api/tasks
       "id": 2,
       "uid": "task_def456",
       "name": "团队会议",
-      "priority": 2,
+      "priority": "medium",
       "due_date": "2024-01-16T14:00:00.000Z",
       "state": "active"
     }
@@ -85,7 +85,7 @@ GET /api/tasks
       "id": 3,
       "uid": "task_ghi789",
       "name": "阅读技术文档",
-      "priority": 3,
+      "priority": "low",
       "state": "active"
     }
   ]
@@ -119,7 +119,7 @@ GET /api/task?uid=task_abc123
   "uid": "task_abc123",
   "name": "完成项目报告",
   "note": "编写Q4项目总结报告",
-  "priority": 1,
+  "priority": "high",
   "due_date": "2024-01-15T10:00:00.000Z",
   "state": "active",
   "project_id": 5,
@@ -155,7 +155,7 @@ GET /api/task/123
   "uid": "task_abc123",
   "name": "完成项目报告",
   "note": "编写Q4项目总结报告",
-  "priority": 1,
+  "priority": "high",
   "due_date": "2024-01-15T10:00:00.000Z",
   "state": "active",
   "project_id": 5,
@@ -177,7 +177,7 @@ GET /api/task/123
       "id": 124,
       "name": "收集数据",
       "state": "completed",
-      "priority": 1
+      "priority": "high"
     }
   ]
 }
@@ -213,7 +213,7 @@ GET /api/task/123/subtasks
     "uid": "subtask_abc123",
     "name": "收集数据",
     "state": "completed",
-    "priority": 1,
+    "priority": "high",
     "due_date": "2024-01-10T00:00:00.000Z",
     "parent_task_id": 123
   },
@@ -222,7 +222,7 @@ GET /api/task/123/subtasks
     "uid": "subtask_def456",
     "name": "编写报告",
     "state": "active",
-    "priority": 2,
+    "priority": "medium",
     "due_date": "2024-01-12T00:00:00.000Z",
     "parent_task_id": 123
   }
@@ -248,7 +248,7 @@ POST /api/task
 {
   "name": "新任务",
   "note": "任务备注",
-  "priority": 1,
+  "priority": "high",
   "due_date": "2024-01-20T10:00:00.000Z",
   "project_id": 5,
   "parent_task_id": null,
@@ -265,7 +265,7 @@ POST /api/task
 |------|------|------|------|
 | name | string | 是 | 任务名称 |
 | note | string | 否 | 任务备注 |
-| priority | number | 否 | 优先级（默认0） |
+| priority | string | 否 | 优先级：high（高）、medium（中）、low（低） |
 | due_date | date | 否 | 到期日期 |
 | project_id | number | 否 | 项目ID |
 | parent_task_id | number | 否 | 父任务ID（创建子任务） |
@@ -291,7 +291,7 @@ POST /api/task
   "uid": "task_new123",
   "name": "新任务",
   "note": "任务备注",
-  "priority": 1,
+  "priority": "high",
   "due_date": "2024-01-20T10:00:00.000Z",
   "state": "active",
   "project_id": 5,
@@ -326,7 +326,7 @@ PATCH /api/task/123
 {
   "name": "更新后的任务名称",
   "note": "更新后的备注",
-  "priority": 2,
+  "priority": "medium",
   "due_date": "2024-01-25T10:00:00.000Z",
   "project_id": 6,
   "state": "active"
@@ -344,7 +344,7 @@ PATCH /api/task/123
   "uid": "task_abc123",
   "name": "更新后的任务名称",
   "note": "更新后的备注",
-  "priority": 2,
+  "priority": "medium",
   "due_date": "2024-01-25T10:00:00.000Z",
   "state": "active",
   "project_id": 6,

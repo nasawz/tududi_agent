@@ -9,7 +9,7 @@ export const createTaskTool = createTool({
   inputSchema: z.object({
     name: z.string().describe("任务名称，必填"),
     note: z.string().optional().describe("任务备注"),
-    priority: z.number().optional().describe("优先级（数值越小优先级越高，默认0）"),
+    priority: z.enum(["high", "medium", "low"]).optional().describe("优先级：high（高）、medium（中）、low（低）"),
     due_date: z.string().optional().describe("到期日期（ISO 8601格式，如：2024-01-20T10:00:00.000Z）"),
     project_id: z.number().optional().describe("所属项目ID"),
     parent_task_id: z.number().optional().describe("父任务ID（用于创建子任务）"),
@@ -27,7 +27,7 @@ export const createTaskTool = createTool({
       uid: z.string(),
       name: z.string(),
       note: z.string().optional().nullable(),
-      priority: z.number().optional(),
+      priority: z.string().optional().nullable(),
       due_date: z.string().optional().nullable(),
       state: z.string(),
       project_id: z.number().optional().nullable(),
