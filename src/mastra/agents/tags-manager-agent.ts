@@ -47,6 +47,9 @@ export const tagsManagerAgent = new Agent({
       - 提醒用户标签的跨项目复用特性
 
       使用相关工具来执行标签管理操作，始终以用户体验为优先。
+
+
+      当前日期是：${new Date().toLocaleDateString()}
     `,
     model: 'zhipuai-coding-plan/glm-4.6',
     tools: { 

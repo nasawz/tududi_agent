@@ -60,6 +60,9 @@ export const inboxManagerAgent = new Agent({
       - 建议用户定期处理收件箱，避免项目堆积
 
       使用相关工具来执行收件箱管理操作，始终以用户体验为优先。
+
+
+      当前日期是：${new Date().toLocaleDateString()}
     `,
     model: 'zhipuai-coding-plan/glm-4.6',
     tools: { 

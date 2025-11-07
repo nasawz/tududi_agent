@@ -69,6 +69,9 @@ export const vectorSearcherAgent = new Agent({
       - 提醒用户注意重复或高度相似的内容
 
       使用搜索工具来执行高质量的语义搜索和内容发现任务，帮助用户更高效地管理和组织Tududi系统中的内容。
+
+
+      当前日期是：${new Date().toLocaleDateString()}
     `,
     model: 'zhipuai-coding-plan/glm-4.6',
     tools: { searchVectorDataTool },

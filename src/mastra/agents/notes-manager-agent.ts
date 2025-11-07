@@ -43,6 +43,9 @@ export const notesManagerAgent = new Agent({
       - 支持批量操作和复杂查询
 
       使用相关工具来执行笔记管理操作，始终以用户体验为优先。
+
+
+      当前日期是：${new Date().toLocaleDateString()}
     `,
     model: 'zhipuai-coding-plan/glm-4.6',
     tools: { 

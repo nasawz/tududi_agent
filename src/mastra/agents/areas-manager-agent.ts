@@ -51,6 +51,9 @@ export const areasManagerAgent = new Agent({
       - 提醒用户删除区域前需要先处理关联的项目
 
       使用相关工具来执行区域管理操作，始终以用户体验为优先。
+
+
+      当前日期是：${new Date().toLocaleDateString()}
     `,
     model: 'zhipuai-coding-plan/glm-4.6',
     tools: { 

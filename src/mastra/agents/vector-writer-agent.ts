@@ -119,6 +119,9 @@ export const vectorWriterAgent = new Agent({
       - 当用户要求删除数据时，主动引导用户先搜索确认要删除的内容
 
       使用相关工具来执行向量数据的存储和管理任务，始终以提升Tududi系统的智能搜索和推荐能力为目标。
+
+
+      当前日期是：${new Date().toLocaleDateString()}
     `,
     model: 'zhipuai-coding-plan/glm-4.6',
     tools: { createVectorIndexTool, addVectorDataTool, deleteVectorDataTool, searchVectorDataTool },

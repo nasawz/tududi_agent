@@ -69,6 +69,15 @@ export const createNoteTool = createTool({
         };
       }
 
+      // 验证返回的数据是否是有效的笔记对象（而不是错误对象）
+      if (!result.data || typeof result.data !== 'object' || !result.data.uid || !result.data.title) {
+        return {
+          success: false,
+          message: "创建笔记失败: 返回的数据格式不正确",
+          note: undefined,
+        };
+      }
+
       return {
         success: true,
         message: `笔记 "${context.title}" 创建成功`,

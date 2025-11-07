@@ -54,6 +54,9 @@ export const searchManagerAgent = new Agent({
       - 帮助用户高效地找到所需内容
 
       使用 searchTool 来执行搜索操作，始终以用户体验为优先。
+
+
+      当前日期是：${new Date().toLocaleDateString()}
     `,
     model: 'zhipuai-coding-plan/glm-4.6',
     tools: { 

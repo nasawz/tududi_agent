@@ -13,6 +13,7 @@ import { projectsManagerAgent } from "./projects-manager-agent";
 import { tasksManagerAgent } from "./tasks-manager-agent";
 import { inboxManagerAgent } from "./inbox-manager-agent";
 import { searchManagerAgent } from "./search-manager-agent";
+import { processInboxItemWorkflow } from "../workflows/process-inbox-item-workflow";
 
 export const superAgent = new Agent({
     name: "Super Agent",
@@ -94,6 +95,7 @@ export const superAgent = new Agent({
       - 当需要管理任务状态、子任务或重复任务时 → 委派给 tasksManagerAgent
       - 当需要快速收集想法到收件箱时 → 委派给 inboxManagerAgent
       - 当需要管理收件箱项目、分析文本内容时 → 委派给 inboxManagerAgent
+      - 当需要处理收件箱项目（自动分析并创建任务或笔记）时 → 使用 processInboxItemWorkflow 工作流
       - 当需要跨实体搜索、查找特定内容时 → 委派给 searchManagerAgent
       - 当需要按关键词、标签、优先级等条件搜索时 → 委派给 searchManagerAgent
       - 对于复杂的组合操作（如重组整个项目结构），可以按顺序委派给多个子 Agent
@@ -129,6 +131,9 @@ export const superAgent = new Agent({
       tasksManagerAgent,
       inboxManagerAgent,
       searchManagerAgent,
+    },
+    workflows: {
+      processInboxItemWorkflow,
     },
     memory: new Memory({
       storage: storage,

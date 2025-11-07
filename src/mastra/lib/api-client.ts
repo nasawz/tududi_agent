@@ -5,7 +5,6 @@
 
 import axios, { AxiosRequestConfig } from 'axios';
 import https from 'https';
-
 // API 配置
 const API_CONFIG = {
   BASE_URL: process.env.TUDUDI_BASE_URL || 'https://competent_shaw.orb.local',
@@ -49,23 +48,33 @@ export async function apiRequest<T = any>(
 
     // 检查响应状态
     if (response.status >= 200 && response.status < 300) {
+      // 即使状态码是 2xx，也要检查数据是否是错误对象
+      if (data && typeof data === 'object' && data.error) {
+        return {
+          success: false,
+          error: data.error,
+        };
+      }
       return {
         success: true,
         data,
       };
     } else {
+      const errorMsg = data?.error || `HTTP ${response.status}: ${response.statusText}`;
       return {
         success: false,
-        error: data?.error || `HTTP ${response.status}: ${response.statusText}`,
+        error: errorMsg,
       };
     }
   } catch (error: any) {
     // 处理 axios 错误
     if (error.response) {
       // 服务器响应了错误状态码
+      const responseData = error.response.data;
+      const errorMsg = responseData?.error || `HTTP ${error.response.status}: ${error.response.statusText}`;
       return {
         success: false,
-        error: error.response.data?.error || `HTTP ${error.response.status}: ${error.response.statusText}`,
+        error: errorMsg,
       };
     } else if (error.request) {
       // 请求已发送但没有收到响应
@@ -96,6 +105,27 @@ export async function apiRequestWithRetry<T = any>(
     const result = await apiRequest<T>(endpoint, options, cookie);
 
     if (result.success) {
+      // 再次检查数据是否是错误对象（防止状态码是2xx但数据是错误的情况）
+      if (result.data && typeof result.data === 'object' && (result.data as any).error) {
+        const errorData = result.data as any;
+        lastError = errorData.error;
+        // 检查是否是数据库锁定错误
+        const isLockError =
+          lastError?.includes('database is locked') ||
+          lastError?.includes('SQLITE_BUSY') ||
+          errorData.details?.some((d: string) => d.includes('SQLITE_BUSY') || d.includes('database is locked'));
+        
+        if (isLockError && attempt < maxAttempts) {
+          const delay = Math.pow(2, attempt - 1) * 1000;
+          await new Promise(resolve => setTimeout(resolve, delay));
+          continue;
+        }
+        
+        return {
+          success: false,
+          error: lastError,
+        };
+      }
       return result;
     }
 

@@ -11,6 +11,7 @@ import { searchManagerAgent } from "./agents/search-manager-agent";
 import { superAgent } from "./agents/super-agent";
 import { vectorWriterAgent } from "./agents/vector-writer-agent";
 import { vectorSearcherAgent } from "./agents/vector-searcher-agent";
+import { processInboxItemWorkflow } from "./workflows/process-inbox-item-workflow";
 
 export const mastra = new Mastra({
   agents: {
@@ -26,7 +27,7 @@ export const mastra = new Mastra({
     superAgent
   },
   workflows: {
-
+    processInboxItemWorkflow,
   },
   storage: storage,
   logger: new PinoLogger({
