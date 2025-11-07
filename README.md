@@ -13,6 +13,7 @@
 - **🎯 任务管理**: 完整的任务生命周期管理，支持子任务和重复任务
 - **🧠 向量存储**: GLM 嵌入模型支持的智能文档搜索
 - **🔄 全生命周期管理**: 创建、读取、更新、删除操作全覆盖
+- **⚙️ 自动化工作流**: 多步骤自动化流程，支持条件分支和智能决策
 - **🏗️ 模块化设计**: 每个 Agent 独立负责特定资源类型
 - **📦 PostgreSQL 存储**: 企业级数据持久化
 
@@ -71,6 +72,9 @@ DATABASE_URL=postgresql://postgres:password@localhost:5432/tududi
 
 # 会话认证
 TUDUDI_COOKIE=your_session_cookie_here
+
+# AI 模型配置（用于工作流文本增强功能）
+ZHIPU_API_KEY=your_zhipu_api_key_here  # 可选，用于收件箱项目处理工作流的 AI 文本增强
 ```
 
 3. 初始化 Mastra 系统：
@@ -124,6 +128,8 @@ src/mastra/
 │   │   └── delete-vector-data-tool.ts
 │   ├── tag/                # 标签相关工具
 │   └── note/               # 笔记相关工具
+├── workflows/              # 工作流定义
+│   └── process-inbox-item-workflow.ts  # 收件箱项目处理工作流
 ├── lib/                    # 共享库
 │   └── api-client.ts       # Tududi API 客户端
 ├── glm-embedding.ts        # GLM 嵌入模型
@@ -160,6 +166,9 @@ src/mastra/
 - `searchManagerAgent` - 搜索相关操作
 - `vectorSearcherAgent` - 向量搜索操作
 - `vectorWriterAgent` - 向量写入操作
+
+**可用工作流**:
+- `processInboxItemWorkflow` - 自动化处理收件箱项目，智能分析并创建任务或笔记
 
 **输出报告包含**:
 1. **数据概览**: 区域、标签、项目、笔记总数统计
@@ -382,6 +391,119 @@ src/mastra/
 - 批量数据处理
 - 存储优化
 
+## 🔄 工作流 (Workflows)
+
+工作流是 Mastra 框架中用于定义和执行复杂多步骤自动化流程的机制。工作流由多个步骤（Steps）组成，支持顺序执行、条件分支、并行处理等高级流程控制。
+
+### 工作流特性
+
+- **步骤化执行**: 将复杂流程分解为多个可管理的步骤
+- **条件分支**: 根据数据状态智能选择执行路径
+- **数据传递**: 步骤间自动传递和映射数据
+- **错误处理**: 完善的错误处理和回滚机制
+- **状态追踪**: 实时追踪工作流执行状态
+
+### 1. Process Inbox Item Workflow (收件箱项目处理工作流)
+
+**职责**: 自动化处理收件箱项目，智能分析文本内容并创建相应的任务或笔记
+
+**工作流 ID**: `process-inbox-item`
+
+**输入参数**:
+```typescript
+{
+  uid: string;  // 收件箱项目UID，必填
+}
+```
+
+**输出结果**:
+```typescript
+{
+  success: boolean;
+  message: string;
+  inboxItem?: {
+    uid: string;
+    content: string;
+    status: string;
+  };
+  createdItem?: {
+    type: "task" | "note";
+    data: any;
+  };
+}
+```
+
+**工作流步骤**:
+
+1. **获取收件箱项目并增强内容** (`get-inbox-item`)
+   - 获取收件箱项目详情
+   - 使用 AI (GLM-4 模型) 智能增强文本内容
+   - 清理和格式化文本
+   - 补充上下文信息
+   - 改善可读性
+   - 提取关键信息
+
+2. **分析文本内容** (`analyze-text`)
+   - 调用 `analyzeInboxTextTool` 分析文本
+   - 提取结构化信息：
+     - `task_name`: 任务名称（如果识别为任务）
+     - `due_date`: 截止日期
+     - `priority`: 优先级（数字）
+     - `tags`: 标签列表
+     - `project`: 关联项目
+
+3. **条件分支处理** (`branch`)
+   - **分支 1**: 如果提取到 `task_name` → 创建任务 (`create-task`)
+     - 使用提取的信息创建任务
+     - 设置任务描述、优先级、截止日期等
+     - 调用 `createTaskTool` 执行创建
+   - **分支 2**: 否则 → 创建笔记 (`create-note`)
+     - 使用文本内容创建笔记
+     - 应用提取的标签
+     - 调用 `createNoteTool` 执行创建
+
+4. **标记为已处理** (`process-inbox-item`)
+   - 调用 `processInboxItemTool` 标记收件箱项目为已处理状态
+
+5. **汇总结果** (`finalize`)
+   - 汇总所有步骤的执行结果
+   - 返回完整的处理报告
+
+**AI 增强功能**:
+
+工作流在第一步使用 GLM-4 模型对收件箱文本进行智能增强：
+
+- **清理和格式化**: 去除多余空格、换行，统一格式
+- **补充上下文**: 如果文本不完整，尝试补充合理的上下文
+- **改善可读性**: 优化文本结构，使其更清晰易读
+- **提取关键信息**: 识别并突出重要信息
+- **保持原意**: 确保增强后的文本保持原始意图和核心信息
+
+**使用场景**:
+
+```typescript
+// 通过 Super Agent 调用工作流
+"处理收件箱项目，UID 为 inbox_12345"
+
+// 工作流会自动：
+// 1. 获取并增强文本内容
+// 2. 分析文本，判断是任务还是笔记
+// 3. 创建相应的任务或笔记
+// 4. 标记收件箱项目为已处理
+```
+
+**特性**:
+- ✅ 全自动化处理流程
+- ✅ AI 智能文本增强
+- ✅ 智能分类（任务 vs 笔记）
+- ✅ 自动提取结构化信息
+- ✅ 错误容错机制（AI 增强失败时使用原始内容）
+- ✅ 完整的状态追踪
+
+**环境要求**:
+- 需要配置 `ZHIPU_API_KEY` 环境变量以启用 AI 文本增强功能
+- 如果未配置或增强失败，工作流会使用原始文本继续执行
+
 ## 🔧 技术栈
 
 - **框架**: Mastra (AI Agent 框架)
@@ -559,10 +681,20 @@ const newProject = await apiPost('/api/project', {
 
 ### 场景 6: 处理收件箱项目
 ```typescript
-// 调用 Inbox Manager Agent
+// 方式 1: 通过 Inbox Manager Agent 手动处理
 "分析收件箱中的文本内容，并将其转换为相应的任务或笔记"
+
+// 方式 2: 通过工作流自动化处理（推荐）
+"使用 processInboxItemWorkflow 处理收件箱项目，UID 为 inbox_12345"
 ```
-输出: 智能分析文本内容，自动分类并创建相应的资源
+输出: 
+- 方式 1: 智能分析文本内容，手动创建相应的资源
+- 方式 2: 全自动处理流程：
+  - AI 增强文本内容
+  - 自动分析并提取结构化信息
+  - 智能判断创建任务或笔记
+  - 自动标记收件箱项目为已处理
+  - 返回完整的处理报告
 
 ### 场景 7: 智能搜索
 ```typescript
