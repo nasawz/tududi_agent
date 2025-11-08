@@ -9,6 +9,7 @@ import { tasksManagerAgent } from "./agents/tasks-manager-agent";
 import { inboxManagerAgent } from "./agents/inbox-manager-agent";
 import { searchManagerAgent } from "./agents/search-manager-agent";
 import { superAgent } from "./agents/super-agent";
+import { ultraPureAgent } from "./agents/ultra-pure-agent";
 import { vectorWriterAgent } from "./agents/vector-writer-agent";
 import { vectorSearcherAgent } from "./agents/vector-searcher-agent";
 import { processInboxItemWorkflow } from "./workflows/process-inbox-item-workflow";
@@ -24,7 +25,8 @@ export const mastra = new Mastra({
     tasksManagerAgent,
     inboxManagerAgent,
     searchManagerAgent,
-    superAgent
+    superAgent,
+    ultraPureAgent
   },
   workflows: {
     processInboxItemWorkflow,

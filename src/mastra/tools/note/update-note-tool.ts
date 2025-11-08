@@ -9,7 +9,11 @@ export const updateNoteTool = createTool({
     uid: z.string().describe("笔记的唯一标识符，必填"),
     title: z.string().optional().describe("笔记标题"),
     content: z.string().optional().describe("笔记内容（支持Markdown）"),
-    tags: z.array(z.string()).optional().describe("标签数组（将完全替换现有标签）"),
+    tags: z.array(
+      z.object({
+        name: z.string(),
+      })
+    ).optional().describe("笔记标签数组，格式: [{ name: \"标签名\" }]（将完全替换现有标签）"),
   }),
   outputSchema: z.object({
     success: z.boolean(),

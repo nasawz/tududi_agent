@@ -9,7 +9,11 @@ export const createNoteTool = createTool({
   inputSchema: z.object({
     title: z.string().describe("笔记标题，必填"),
     content: z.string().describe("笔记内容（支持Markdown），必填"),
-    tags: z.array(z.string()).optional().describe("标签数组"),
+    tags: z.array(
+      z.object({
+        name: z.string(),
+      })
+    ).optional().describe("笔记标签数组，格式: [{ name: \"标签名\" }]"),
     project_uid: z.string().optional().describe("项目UID"),
     project_id: z.number().optional().describe("项目ID（与project_uid二选一）"),
   }),
