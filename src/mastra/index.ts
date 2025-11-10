@@ -16,6 +16,7 @@ import { processInboxItemWorkflow } from "./workflows/process-inbox-item-workflo
 import parallelDemoWorkflow from "./workflows/parallel-demo-workflow";
 import { numberGuessingWorkflow } from "./workflows/number-guessing-workflow";
 import { passwordStrengthWorkflow } from "./workflows/password-strength-workflow";
+import { batchDocumentProcessorWorkflow } from "./workflows/batch-document-processor-workflow";
 
 export const mastra = new Mastra({
   agents: {
@@ -35,7 +36,8 @@ export const mastra = new Mastra({
     processInboxItemWorkflow,
     parallelDemoWorkflow,
     numberGuessingWorkflow,
-    passwordStrengthWorkflow
+    passwordStrengthWorkflow,
+    batchDocumentProcessorWorkflow
   },
   storage: storage,
   logger: new PinoLogger({
