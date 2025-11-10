@@ -15,6 +15,7 @@ import { vectorSearcherAgent } from "./agents/vector-searcher-agent";
 import { processInboxItemWorkflow } from "./workflows/process-inbox-item-workflow";
 import parallelDemoWorkflow from "./workflows/parallel-demo-workflow";
 import { numberGuessingWorkflow } from "./workflows/number-guessing-workflow";
+import { passwordStrengthWorkflow } from "./workflows/password-strength-workflow";
 
 export const mastra = new Mastra({
   agents: {
@@ -33,7 +34,8 @@ export const mastra = new Mastra({
   workflows: {
     processInboxItemWorkflow,
     parallelDemoWorkflow,
-    numberGuessingWorkflow
+    numberGuessingWorkflow,
+    passwordStrengthWorkflow
   },
   storage: storage,
   logger: new PinoLogger({
