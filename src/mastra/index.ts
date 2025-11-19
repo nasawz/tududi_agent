@@ -17,6 +17,7 @@ import parallelDemoWorkflow from "./workflows/parallel-demo-workflow";
 import { numberGuessingWorkflow } from "./workflows/number-guessing-workflow";
 import { passwordStrengthWorkflow } from "./workflows/password-strength-workflow";
 import { batchDocumentProcessorWorkflow } from "./workflows/batch-document-processor-workflow";
+import { completenessScorer, operationAccuracyScorer, responseQualityScorer, toolSelectionScorer } from "./scorers/ultra-pure-agent-scorer";
 
 export const mastra = new Mastra({
   agents: {
@@ -40,6 +41,12 @@ export const mastra = new Mastra({
     batchDocumentProcessorWorkflow
   },
   storage: storage,
+  scorers: {
+    completenessScorer,
+    toolSelectionScorer,
+    operationAccuracyScorer,
+    responseQualityScorer,
+  },
   logger: new PinoLogger({
     name: 'Mastra',
     level: 'info',

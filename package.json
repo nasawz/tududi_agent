@@ -1,6 +1,7 @@
 {
   "name": "tududi_agent",
   "version": "1.0.0",
+  "type": "module",
   "main": "index.js",
   "license": "MIT",
   "scripts": {
@@ -9,6 +10,7 @@
   },
   "dependencies": {
     "@mastra/core": "^0.23.3",
+    "@mastra/evals": "^0.14.4",
     "@mastra/loggers": "^0.10.18",
     "@mastra/memory": "^0.15.10",
     "@mastra/pg": "^0.17.7",

@@ -1,6 +1,7 @@
 import { Agent } from "@mastra/core/agent";
 import { Memory } from '@mastra/memory';
 import { storage } from "../storage";
+import { scorers } from "../scorers/ultra-pure-agent-scorer";
 
 // ========== 笔记相关工具 ==========
 import { listNotesTool } from "../tools/note/list-notes-tool";
@@ -225,6 +226,36 @@ export const ultraPureAgent = new Agent({
     },
     workflows: {
         processInboxItemWorkflow,
+    },
+    scorers: {
+        completeness: {
+            scorer: scorers.completenessScorer,
+            sampling: {
+                type: 'ratio',
+                rate: 1,
+            },
+        },
+        toolSelection: {
+            scorer: scorers.toolSelectionScorer,
+            sampling: {
+                type: 'ratio',
+                rate: 1,
+            },
+        },
+        operationAccuracy: {
+            scorer: scorers.operationAccuracyScorer,
+            sampling: {
+                type: 'ratio',
+                rate: 1,
+            },
+        },
+        responseQuality: {
+            scorer: scorers.responseQualityScorer,
+            sampling: {
+                type: 'ratio',
+                rate: 1,
+            },
+        },
     },
     memory: new Memory({
         storage: storage,
